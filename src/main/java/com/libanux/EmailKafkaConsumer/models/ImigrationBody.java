@@ -24,6 +24,7 @@ public record ImigrationBody(
         String filename,
         String phoneNumber,
         String email,
-        String professionOther
+        String professionOther,
+        String imageFile
 ) {
 }

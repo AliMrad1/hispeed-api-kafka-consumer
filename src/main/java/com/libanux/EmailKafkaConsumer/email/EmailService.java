@@ -51,8 +51,29 @@ public class EmailService  {
             helper.setSubject(fullname.append("_cv").toString());
             helper.setFrom(from);
 
+            mailSender.send(mimeMessage);
+
+        }catch (MessagingException e){
+            LOGGER.error("failed to send email",e);
+            throw new IllegalStateException("failed to send email");
+        }
+    }
+
+    public void send(String to, String email, byte[] cv, byte[] image,StringBuilder fullname) {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true,"utf-8");
+            helper.setText(email, true);
+            helper.setTo(to);
+            helper.setSubject(fullname.append("_cv").toString());
+            helper.setFrom(from);
+
             ByteArrayResource fileResource = new ByteArrayResource(cv);
             helper.addAttachment(Objects.requireNonNull(fullname.append("_cv").toString()), fileResource);
+
+            ByteArrayResource imageResource = new ByteArrayResource(image);
+            helper.addAttachment(Objects.requireNonNull(fullname.append("_image").toString()), imageResource);
+
             mailSender.send(mimeMessage);
 
         }catch (MessagingException e){
