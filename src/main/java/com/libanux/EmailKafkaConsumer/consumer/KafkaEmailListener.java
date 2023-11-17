@@ -43,7 +43,7 @@ public class KafkaEmailListener {
                         EmailHtmlCustom.buildEmail(imigrationBody),
                         immigrationKafkaModel.cv(),
                         immigrationKafkaModel.image(),
-                        new StringBuilder(imigrationBody.FullName())
+                        String.valueOf(imigrationBody.FullName())
                 );
             }else{
                 emailService.send(
@@ -152,7 +152,7 @@ public class KafkaEmailListener {
                         EmailApplyCustom.buildEmail(applyBody),
                         applyKafkaModel.cv(),
                         applyKafkaModel.image(),
-                        new StringBuilder(applyBody.fullName())
+                        String.valueOf(applyBody.fullName())
                 );
             } else {
                 emailService.send(
