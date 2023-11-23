@@ -2,21 +2,22 @@ package com.libanux.EmailKafkaConsumer.email;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+
 import org.apache.tika.detect.DefaultDetector;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
-import org.apache.tika.mime.MimeTypes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
-import java.util.Objects;
 
 
 @Service
@@ -32,6 +33,14 @@ public class EmailService  {
     @Value("${spring.mail.username}")
     private String from;
 
+
+    private Detector detector;
+
+    @Bean
+    public void FileExtensionDetector() {
+        // Initialize Tika detector
+        detector = new DefaultDetector();
+    }
     public void send(String to, String email, String fullName) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -64,7 +73,6 @@ public class EmailService  {
         }
     }
 
-    private final Detector detector = new DefaultDetector(MimeTypes.getDefaultMimeTypes());
 
     public void send(String to, String email, byte[] cv, byte[] image, String fullName) {
         try {
@@ -101,9 +109,11 @@ public class EmailService  {
         }
     }
 
-    private String detectExtension(byte[] data) throws IOException {
-        TikaInputStream tikaInputStream = TikaInputStream.get(data);
-        MediaType mediaType = detector.detect(tikaInputStream, null);
-        return mediaType.getSubtype();
+    public String detectExtension(byte[] data) throws IOException {
+        try (TikaInputStream tikaInputStream = TikaInputStream.get(data)) {
+            Metadata metadata = new Metadata();
+            MediaType mediaType = detector.detect(tikaInputStream, metadata);
+            return mediaType.getSubtype();
+        }
     }
 }
