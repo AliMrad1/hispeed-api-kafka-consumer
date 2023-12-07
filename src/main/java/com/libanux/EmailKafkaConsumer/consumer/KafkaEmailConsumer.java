@@ -29,6 +29,8 @@ public class KafkaEmailConsumer {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
+        props.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, "20971520");
+        props.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, "20971520");
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         return props;
     }
