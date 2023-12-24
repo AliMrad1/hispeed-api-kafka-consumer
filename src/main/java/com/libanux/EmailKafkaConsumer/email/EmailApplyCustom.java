@@ -15,7 +15,6 @@ public class EmailApplyCustom {
         String dateOfBirth = apply.dateofbirth();
         String passportCountry = apply.passportCountry();
         String currentResidence = apply.currentResidence();
-        String desiredCountry = apply.desiredCountry();
         String education = apply.education();
         String profession = apply.profession();
         String yearofExp = apply.yearsOfExperience();
@@ -82,7 +81,6 @@ public class EmailApplyCustom {
                 "            <p><strong>Passport Country:</strong> " + passportCountry + "</p>" +
                 "            <p><strong>Current Residence:</strong> " + currentResidence + "</p>" +
                 "            <p><strong>English Proficiency:</strong> " + englishProficiency + "</p>" +
-                "            <p><strong>desiredCountry:</strong> " + desiredCountry + "</p>" +
 
                 "            <p><strong>Profession:</strong> " + profession + "</p>" +
                 "            <p><strong>education:</strong> " + education + "</p>" +

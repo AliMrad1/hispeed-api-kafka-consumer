@@ -140,10 +140,6 @@ public class KafkaEmailListener {
         ApplyForAJobBody applyBody =null;
         try {
             applyKafkaModel = objectMapper.readValue(record.value(), ApplyForAJobKafkaModel.class);
-            /*
-             * get json string from ImmigrationKafkaModel
-             * and map it to ImmigrationJson class by ObjectMapper again
-             * */
             applyBody = objectMapper.readValue(applyKafkaModel.jsonBody(), ApplyForAJobBody.class);
 
             if (applyKafkaModel.image() != null){

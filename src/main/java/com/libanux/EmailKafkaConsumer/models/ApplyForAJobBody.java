@@ -11,7 +11,6 @@ public record ApplyForAJobBody(
         String profession,
         String yearsOfExperience,
         String education,
-        String desiredCountry,
         String gender,
         String linkCv,
         String status,
